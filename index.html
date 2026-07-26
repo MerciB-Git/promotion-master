@@ -42,7 +42,7 @@
 
   .card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;margin-top:14px;box-shadow:0 6px 18px -14px rgba(0,0,0,.25);}
   .card h3{font-size:14px;color:var(--brand);display:flex;align-items:center;gap:7px;margin-bottom:10px;}
-  .card h3 .n{width:20px;height:20px;border-radius:50%;background:var(--brand);color:#fff;font-size:12px;display:grid;place-items:center;}
+  .card h3 .n{width:20px;height:20px;border-radius:50%;background:var(--brand);color:#fff;font-size:12px;display:grid;place-items:center;flex:0 0 auto;}
 
   .row{display:flex;align-items:center;gap:8px;}
   label.fld{display:flex;flex-direction:column;gap:4px;flex:1;}
@@ -51,15 +51,17 @@
   input.inp:focus{border-color:var(--gold);background:#fffdf8;}
 
   table{width:100%;border-collapse:collapse;}
-  .items th{font-size:10.5px;color:var(--muted);font-weight:500;text-align:right;padding:0 4px 6px;}
+  .items th{font-size:10px;color:var(--muted);font-weight:500;text-align:right;padding:0 3px 6px;}
   .items th:first-child{text-align:left;}
-  .items td{padding:3px 2px;}
-  .items input{border:1.5px solid var(--line);border-radius:8px;padding:7px 6px;font-size:13.5px;width:100%;text-align:right;font-weight:600;outline:none;}
-  .items input.nm{text-align:left;font-weight:500;color:var(--ink);}
+  .items td{padding:3px 1px;}
+  .items input{border:1.5px solid var(--line);border-radius:8px;padding:7px 5px;font-size:13px;width:100%;text-align:right;font-weight:600;outline:none;}
+  .items input.nm{text-align:left;font-weight:500;color:var(--ink);font-size:12.5px;}
   .items input:focus{border-color:var(--gold);}
-  .items .del{color:var(--muted);background:none;border:none;font-size:17px;cursor:pointer;padding:0 2px;}
-  .addbtn{margin-top:8px;background:none;border:1.5px dashed var(--line);color:var(--brand);border-radius:10px;padding:8px;width:100%;font-weight:600;font-size:13px;cursor:pointer;}
-  .totrow{display:flex;justify-content:space-between;margin-top:10px;padding-top:10px;border-top:1px dashed var(--line);font-size:13px;}
+  .items .del{color:var(--muted);background:none;border:none;font-size:16px;cursor:pointer;padding:0;}
+  .addbtn{margin-top:8px;background:var(--brand);border:none;color:#fff;border-radius:10px;padding:11px;width:100%;font-weight:700;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;}
+  .addbtn.ghost{background:none;border:1.5px dashed var(--line);color:var(--muted);font-weight:600;font-size:13px;padding:8px;}
+  .totrow{display:flex;justify-content:space-between;margin-top:9px;padding-top:9px;border-top:1px dashed var(--line);font-size:13px;}
+  .totrow.tight{margin-top:4px;border:none;padding-top:0;}
   .totrow b{color:var(--deep);}
 
   .promo-price{text-align:center;margin:6px 0 4px;}
@@ -83,7 +85,7 @@
   .chan .net.pos{color:var(--good);} .chan .net.neg{color:var(--bad);}
   .chan .mg{font-size:13px;color:var(--muted);}
   .chan .mg b{font-size:15px;color:var(--ink);}
-  .chan .meta{font-size:11.5px;color:var(--muted);margin-top:7px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;}
+  .chan .meta{font-size:11.5px;color:var(--muted);margin-top:7px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;align-items:center;}
   .chan .gpedit{display:flex;align-items:center;gap:6px;}
   .chan .gpedit input{width:52px;border:1.5px solid var(--line);border-radius:8px;padding:4px 6px;text-align:right;font-weight:600;font-size:13px;outline:none;}
   .chan .gpedit input:focus{border-color:var(--gold);}
@@ -91,7 +93,7 @@
 
   .mini{font-size:11px;color:var(--muted);}
   .foot{text-align:center;font-size:11px;color:var(--muted);margin-top:18px;line-height:1.6;}
-  .savebar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);padding:10px 14px;display:flex;gap:10px;max-width:640px;margin:0 auto;box-shadow:0 -8px 20px -14px rgba(0,0,0,.3);}
+  .savebar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);padding:10px 14px;display:flex;gap:10px;max-width:640px;margin:0 auto;box-shadow:0 -8px 20px -14px rgba(0,0,0,.3);z-index:50;}
   .savebar button{flex:1;border:none;border-radius:12px;padding:12px;font-weight:700;font-size:14px;cursor:pointer;}
   .savebar .reset{background:var(--cream);color:var(--brand);border:1.5px solid var(--line);flex:0 0 44%;}
   .savebar .save{background:var(--brand);color:#fff;}
@@ -100,6 +102,37 @@
   details.help summary{cursor:pointer;color:var(--brand);font-weight:600;}
   details.help p{margin:6px 0;}
   code{background:#f3ece3;padding:1px 5px;border-radius:5px;font-size:11px;}
+
+  /* ===== Menu picker modal ===== */
+  #picker{position:fixed;inset:0;z-index:80;background:rgba(26,20,19,.55);display:flex;align-items:flex-end;justify-content:center;}
+  #picker .sheet{background:var(--cream);width:100%;max-width:640px;height:88vh;border-radius:20px 20px 0 0;display:flex;flex-direction:column;box-shadow:0 -10px 40px rgba(0,0,0,.3);}
+  #picker .phead{padding:14px 16px 10px;border-bottom:1px solid var(--line);}
+  #picker .phead .titlerow{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+  #picker .phead h3{font-size:16px;color:var(--deep);}
+  #picker .xbtn{background:none;border:none;font-size:22px;color:var(--muted);cursor:pointer;line-height:1;}
+  #searchBox{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:11px 12px;font-size:15px;outline:none;background:#fff;}
+  #searchBox:focus{border-color:var(--gold);}
+  #plist{flex:1;overflow-y:auto;padding:6px 10px 10px;}
+  .mitem{display:flex;align-items:center;gap:10px;padding:10px 8px;border-bottom:1px solid #f0e6da;cursor:pointer;}
+  .mitem:active{background:#f4ece1;}
+  .mitem .chk{width:22px;height:22px;border:2px solid var(--line);border-radius:7px;display:grid;place-items:center;flex:0 0 auto;font-size:14px;color:#fff;background:#fff;}
+  .mitem.sel .chk{background:var(--brand);border-color:var(--brand);}
+  .mitem .info{flex:1;min-width:0;}
+  .mitem .nm{font-size:14px;font-weight:500;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .mitem .sub{font-size:11px;color:var(--muted);}
+  .mitem .pr{font-size:13px;font-weight:600;color:var(--brand);flex:0 0 auto;}
+  #picker .pfoot{padding:12px 16px;border-top:1px solid var(--line);background:#fff;}
+  #addSel{width:100%;border:none;background:var(--brand);color:#fff;border-radius:12px;padding:13px;font-weight:700;font-size:15px;cursor:pointer;}
+  #addSel:disabled{background:#d9c8bb;}
+
+  /* ===== Confirm modal ===== */
+  #confirmModal{position:fixed;inset:0;z-index:90;background:rgba(26,20,19,.55);display:flex;align-items:center;justify-content:center;padding:24px;}
+  #confirmModal .cbox{background:#fff;border-radius:16px;padding:20px;max-width:340px;width:100%;box-shadow:0 20px 50px rgba(0,0,0,.3);}
+  #confirmModal .cmsg{font-size:14px;color:var(--ink);line-height:1.5;text-align:center;margin-bottom:16px;}
+  #confirmModal .crow{display:flex;gap:10px;}
+  #confirmModal .cbtn{flex:1;border:none;border-radius:10px;padding:11px;font-weight:700;font-size:14px;cursor:pointer;}
+  #confirmModal .cancel{background:var(--cream);color:var(--ink);border:1.5px solid var(--line);}
+  #confirmModal .ok{background:var(--brand);color:#fff;}
 </style>
 </head>
 <body>
@@ -135,26 +168,28 @@
     <div class="card">
       <h3><span class="n">1</span> เมนูในเซ็ต (ต้นทุน & ราคาปกติ)</h3>
       <table class="items">
-        <thead><tr><th>เมนู</th><th>ต้นทุน ฿</th><th>ราคาปกติ ฿</th><th></th></tr></thead>
+        <thead><tr>
+          <th style="width:38%">เมนู</th><th style="width:20%">ต้นทุน ฿</th>
+          <th style="width:18%">แพคเกจ ฿</th><th style="width:18%">ราคาปกติ</th><th style="width:6%"></th>
+        </tr></thead>
         <tbody id="itemBody"></tbody>
       </table>
-      <button class="addbtn" id="addItem">+ เพิ่มเมนู</button>
+      <button class="addbtn" id="addItem">＋ เพิ่มเมนูจากคลัง</button>
+      <button class="addbtn ghost" id="addBlank">＋ เพิ่มแถวว่าง (กรอกเอง)</button>
       <div class="totrow"><span>รวมต้นทุนอาหาร</span><b id="sumFood">฿0</b></div>
-      <div class="totrow" style="margin-top:4px;border:none;padding-top:0;"><span>รวมราคาปกติ (ก่อนลด)</span><b id="sumPrice">฿0</b></div>
+      <div class="totrow tight"><span>รวมค่าแพคเกจ</span><b id="sumPkg">฿0</b></div>
+      <div class="totrow tight"><span>รวมราคาปกติ (ก่อนลด)</span><b id="sumPrice">฿0</b></div>
     </div>
 
     <!-- Overheads -->
     <div class="card">
-      <h3><span class="n">2</span> โครงสร้างต้นทุนแฝง</h3>
+      <h3><span class="n">2</span> โครงสร้างต้นทุนแฝง (% ของรายได้ ex-VAT)</h3>
       <div class="row" style="gap:10px;">
         <label class="fld"><span>VAT %</span><input class="inp" id="vat" inputmode="decimal"></label>
         <label class="fld"><span>ค่าใช้จ่ายอื่น %</span><input class="inp" id="other" inputmode="decimal"></label>
-      </div>
-      <div class="row" style="gap:10px;margin-top:8px;">
         <label class="fld"><span>การตลาด %</span><input class="inp" id="mkt" inputmode="decimal"></label>
-        <label class="fld"><span>ค่าแพคเกจ/เซ็ต ฿</span><input class="inp" id="pkg" inputmode="decimal"></label>
       </div>
-      <div class="mini" style="margin-top:8px;">% คิดจากรายได้ (ex-VAT) • แพคเกจใช้เฉพาะช่องที่ติ๊ก "รวมแพคเกจ"</div>
+      <div class="mini" style="margin-top:8px;">ค่าแพคเกจดึงจากเมนูอัตโนมัติ • ใช้เฉพาะช่องที่ติ๊ก "รวมแพคเกจ"</div>
     </div>
 
     <!-- Promo price -->
@@ -187,7 +222,7 @@
 
     <div class="foot">
       ค่าที่แก้ไขถูกบันทึกในเครื่องนี้อัตโนมัติ (localStorage)<br>
-      เปลี่ยน PIN: แก้ค่า <code>APP_PIN</code> ในไฟล์ index.html
+      คลังเมนู <b id="catCount">0</b> รายการจากไฟล์ Excel • เปลี่ยน PIN: แก้ <code>APP_PIN</code> ใน index.html
     </div>
   </div>
 
@@ -197,21 +232,52 @@
   </div>
 </div>
 
+<!-- ===== MENU PICKER ===== -->
+<div id="picker" class="hidden">
+  <div class="sheet">
+    <div class="phead">
+      <div class="titlerow">
+        <h3>เลือกเมนูจากคลัง</h3>
+        <button class="xbtn" id="pickerClose">✕</button>
+      </div>
+      <input id="searchBox" type="text" placeholder="🔍 ค้นหาเมนู เช่น pizza, salad, spaghetti…" autocomplete="off">
+    </div>
+    <div id="plist"></div>
+    <div class="pfoot">
+      <button id="addSel" disabled>เพิ่มที่เลือก</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== CONFIRM MODAL (แทน window.confirm ที่บล็อกไม่ได้บนมือถือบางรุ่น) ===== -->
+<div id="confirmModal" class="hidden">
+  <div class="cbox">
+    <div id="confirmMsg" class="cmsg"></div>
+    <div class="crow">
+      <button id="confirmCancel" class="cbtn cancel">ยกเลิก</button>
+      <button id="confirmOk" class="cbtn ok">ยืนยัน</button>
+    </div>
+  </div>
+</div>
+
 <script>
 /* ============ CONFIG ============ */
 const APP_PIN = "2495";   // <<< เปลี่ยน PIN ตรงนี้ (4 หลัก)
 
-/* ============ DEFAULT DATA (จากไฟล์ Excel) ============ */
+/* ============ MENU CATALOG (จากไฟล์ Excel: ชีต Food cost) ============ */
+const CATALOG = [{"name":"น้ำดื่ม (Water)","price":20,"cost":7,"pkg":0},{"name":"Australian Beef & Truffle Pizza (11\")","price":495,"cost":125.35,"pkg":0},{"name":"Australian Beef & Truffle Pizza (14\")","price":690,"cost":175.75,"pkg":0},{"name":"Australian Beef & Truffle Pizza (8'')","price":370,"cost":73.83,"pkg":0},{"name":"Bacon Chili Nacho Pizza (11\")","price":425,"cost":97.13,"pkg":0},{"name":"Bacon Chili Nacho Pizza (14\")","price":545,"cost":147.61,"pkg":0},{"name":"Basil Beef (11\")","price":425,"cost":94.89,"pkg":0},{"name":"Basil Beef (14\")","price":545,"cost":149.61,"pkg":0},{"name":"Basil Beef (8\")","price":325,"cost":58.83,"pkg":0},{"name":"Basil Chicken (11\")","price":359,"cost":87.54,"pkg":0},{"name":"Basil Chicken (14\")","price":480,"cost":134.91,"pkg":0},{"name":"Basil Chicken (8'')","price":260,"cost":48.33,"pkg":0},{"name":"BBQ Chicken (11\")","price":359,"cost":109.16,"pkg":0},{"name":"BBQ Chicken (14\")","price":480,"cost":154.39,"pkg":0},{"name":"BBQ Chicken (8\")","price":260,"cost":61.04,"pkg":0},{"name":"Beef Chili Nacho Pizza (11\")","price":459,"cost":90.16,"pkg":0},{"name":"Beef Chili Nacho Pizza (14\")","price":585,"cost":150.03,"pkg":0},{"name":"Bread Stick","price":130,"cost":33.35,"pkg":10.56},{"name":"Caesar's Salad","price":240,"cost":51,"pkg":12.78},{"name":"Calamari French Fries","price":195,"cost":60.11,"pkg":8.62},{"name":"Calamari Pesto Sauce","price":200,"cost":60.11,"pkg":8.62},{"name":"Chicken Drumettes BBQ","price":195,"cost":66.53,"pkg":10.56},{"name":"Chicken Drumettes Buffalo","price":195,"cost":65.76,"pkg":10.56},{"name":"Chip and Salsa","price":195,"cost":32.41,"pkg":10.66},{"name":"Classic NYC (11\")","price":299,"cost":80.52,"pkg":0},{"name":"Classic NYC (14\")","price":370,"cost":117.86,"pkg":0},{"name":"Classic NYC (Margherita) (8\")","price":199,"cost":40.49,"pkg":0},{"name":"Double Pepperoni (11\")","price":495,"cost":138.43,"pkg":0},{"name":"Double Pepperoni (14\")","price":690,"cost":197.14,"pkg":0},{"name":"Extra Cheese 4+1 ( 11\" )","price":459,"cost":120.89,"pkg":0},{"name":"Extra Cheese 4+1 ( 14\" )","price":585,"cost":175.9,"pkg":0},{"name":"Extra Cheese 4+1 (8\")","price":325,"cost":62.27,"pkg":0},{"name":"Godfather (11\")","price":459,"cost":134.28,"pkg":0},{"name":"Godfather (14\")","price":585,"cost":181.14,"pkg":0},{"name":"Godfather (8\")","price":325,"cost":88.63,"pkg":0},{"name":"Hawaiian (11\")","price":425,"cost":104.72,"pkg":0},{"name":"Hawaiian (14\")","price":545,"cost":160.48,"pkg":0},{"name":"Hawaiian (8\")","price":325,"cost":63.76,"pkg":0},{"name":"Hawaiian Seafood (11\")","price":495,"cost":127.92,"pkg":0},{"name":"Hawaiian Seafood (14\")","price":690,"cost":195.95,"pkg":0},{"name":"Hawaiian Seafood (8\")","price":370,"cost":72.74,"pkg":0},{"name":"Italian Duo (11\")","price":425,"cost":84.5,"pkg":0},{"name":"Italian Duo (14\")","price":545,"cost":133.07,"pkg":0},{"name":"Italian Duo (8\")","price":325,"cost":53.03,"pkg":0},{"name":"Italian soda","price":70,"cost":15,"pkg":10.66},{"name":"Marinara Garlic ( 11\" )","price":199,"cost":41.8,"pkg":0},{"name":"Marinara Garlic ( 14\" )","price":280,"cost":58.5,"pkg":0},{"name":"Mixed sausage","price":270,"cost":83.57,"pkg":10.56},{"name":"New York Duo (11\")","price":459,"cost":105.09,"pkg":0},{"name":"New York Duo (14\")","price":585,"cost":148.56,"pkg":0},{"name":"Parma Rocket (11\")","price":495,"cost":122.69,"pkg":0},{"name":"Parma Rocket (14\")","price":640,"cost":185.97,"pkg":0},{"name":"Parma Rocket (8\")","price":350,"cost":76.9,"pkg":0},{"name":"Parma Rocket Salad","price":300,"cost":85,"pkg":12.78},{"name":"Pepperoni (11\")","price":459,"cost":117.83,"pkg":0},{"name":"Pepperoni (14\")","price":585,"cost":161.33,"pkg":0},{"name":"Pepperoni (8\")","price":325,"cost":69.78,"pkg":0},{"name":"Rocket Italian Sausage Salad","price":300,"cost":80,"pkg":12.78},{"name":"Rocket Salad","price":190,"cost":59,"pkg":12.78},{"name":"Seafood Cocktail (11\")","price":495,"cost":148.55,"pkg":0},{"name":"Seafood Cocktail (14\")","price":585,"cost":178.97,"pkg":0},{"name":"Seafood Cocktail (8\")","price":325,"cost":83.83,"pkg":0},{"name":"Shrimp&Sauce","price":280,"cost":63.37,"pkg":10.66},{"name":"Shrimp seafood (11\")","price":495,"cost":133.58,"pkg":0},{"name":"Shrimp seafood (14\")","price":745,"cost":220.31,"pkg":0},{"name":"Shrimp seafood (8\")","price":370,"cost":65.98,"pkg":0},{"name":"Smoked Pizza by Chef pam (11\")","price":495,"cost":139.52,"pkg":0},{"name":"Smoked Pizza by Chef pam (14\")","price":745,"cost":258.25,"pkg":0},{"name":"Spaghetti Bacon Garlic","price":180,"cost":40.54,"pkg":0},{"name":"Spaghetti Bolognese","price":235,"cost":45.89,"pkg":0},{"name":"Spaghetti Carbonara","price":200,"cost":51.13,"pkg":0},{"name":"Spaghetti Chilli Beef","price":200,"cost":37.28,"pkg":0},{"name":"Spaghetti Chilli Shrimp","price":235,"cost":65.26,"pkg":0},{"name":"Spaghetti Italian sausage","price":200,"cost":50.15,"pkg":0},{"name":"Spaghetti Truffle Mushroom","price":280,"cost":71.76,"pkg":0},{"name":"Steak Beef","price":635,"cost":322.94,"pkg":10.66},{"name":"Thousand Ham Cheese (8\")","price":260,"cost":47.83,"pkg":0},{"name":"Truffle & Mushroom (11\")","price":495,"cost":134.51,"pkg":0},{"name":"Truffle & Mushroom (14\")","price":640,"cost":212,"pkg":0},{"name":"Truffle&Mushroom (8\")","price":350,"cost":84.54,"pkg":0}];
+
+/* ============ DEFAULT DATA ============ */
 const DEFAULTS = {
   items: [
-    { name:'Smoked Pizza 11"', cost:139.52, price:495 },
-    { name:'Caesar Salad',      cost:51.00,  price:240 },
-    { name:'Spaghetti Chilli Shrimp', cost:65.26, price:235 },
-    { name:'น้ำดื่ม',           cost:7.00,   price:20  },
+    { name:'Smoked Pizza by Chef pam (11")', cost:139.52, pkg:0,     price:495 },
+    { name:"Caesar's Salad",                  cost:51.00,  pkg:12.78, price:240 },
+    { name:'Spaghetti Chilli Shrimp',         cost:65.26,  pkg:0,     price:235 },
+    { name:'น้ำดื่ม (Water)',                  cost:7.00,   pkg:0,     price:20  },
   ],
-  vat:7, other:35, mkt:8, pkg:34,
-  discount:20,            // %
-  promoOverride:null,     // ถ้าพิมพ์ราคาตรง
+  vat:7, other:35, mkt:8,
+  discount:20,
+  promoOverride:null,
   channels: [
     { name:'🏠 หน้าร้าน / รับกลับ', gp:0,  pkg:true  },
     { name:'🍽️ Hungry Hub',        gp:12, pkg:false },
@@ -219,74 +285,89 @@ const DEFAULTS = {
     { name:'🛵 Grab',               gp:30, pkg:true  },
   ],
 };
-const KEY = 'chefpam_promo_calc_v1';
+const KEY = 'chefpam_promo_calc_v2';
 let S = load();
 
 function load(){
-  try{ const s = JSON.parse(localStorage.getItem(KEY)); if(s && s.items) return s; }catch(e){}
+  try{ const s = JSON.parse(localStorage.getItem(KEY)); if(s && s.items && s.channels) return s; }catch(e){}
   return structuredClone(DEFAULTS);
 }
 function save(){ localStorage.setItem(KEY, JSON.stringify(S)); }
-
-/* ============ PIN GATE ============ */
-const pinField = document.getElementById('pinField');
-pinField.value = '';                       // กันค่า autofill ค้าง
-let pinTouched = false;
-setTimeout(()=>{ pinField.value=''; pinField.focus(); }, 60);
-pinField.addEventListener('keydown', ()=>{ pinTouched = true; });
-pinField.addEventListener('input', ()=>{
-  pinField.value = pinField.value.replace(/\D/g,'').slice(0,4);   // ตัวเลขเท่านั้น
-  const code = pinField.value;
-  document.getElementById('pinErr').textContent = '';
-  if(code.length===4){
-    if(code===APP_PIN){ unlock(); }
-    else if(pinTouched){ document.getElementById('pinErr').textContent='PIN ไม่ถูกต้อง'; pinField.value=''; }
-    else { pinField.value=''; }            // ค่าจาก autofill ที่ไม่ถูก → เคลียร์เงียบๆ
-  }
-});
-function unlock(){
-  document.getElementById('gate').classList.add('hidden');
-  document.getElementById('app').classList.remove('hidden');
-  render(); renderChannels();
-}
-document.getElementById('lockBtn').addEventListener('click',()=>{
-  document.getElementById('app').classList.add('hidden');
-  document.getElementById('gate').classList.remove('hidden');
-  pinField.value=''; pinTouched=false; document.getElementById('pinErr').textContent=''; pinField.focus();
-});
 
 /* ============ HELPERS ============ */
 const $ = id => document.getElementById(id);
 const num = v => { const n=parseFloat(v); return isNaN(n)?0:n; };
 const baht = n => '฿'+Math.round(n).toLocaleString();
-const baht1 = n => '฿'+n.toLocaleString(undefined,{maximumFractionDigits:1});
+const baht1 = n => '฿'+(Math.round(n*10)/10).toLocaleString(undefined,{maximumFractionDigits:1});
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 
+/* ============ CONFIRM MODAL (ใช้แทน window.confirm) ============ */
+let _confirmCb = null;
+function openConfirm(msg, onOk){
+  $('confirmMsg').textContent = msg;
+  _confirmCb = onOk;
+  $('confirmModal').classList.remove('hidden');
+}
+function closeConfirm(){ $('confirmModal').classList.add('hidden'); _confirmCb = null; }
+$('confirmCancel').addEventListener('click', closeConfirm);
+$('confirmOk').addEventListener('click', ()=>{
+  const cb = _confirmCb;
+  closeConfirm();
+  if(cb) cb();
+});
+$('confirmModal').addEventListener('click', e=>{ if(e.target===$('confirmModal')) closeConfirm(); });
+
+/* ============ PIN GATE ============ */
+const pinField = $('pinField');
+pinField.value=''; let pinTouched=false;
+setTimeout(()=>{ pinField.value=''; pinField.focus(); }, 60);
+pinField.addEventListener('keydown', ()=>{ pinTouched=true; });
+pinField.addEventListener('input', ()=>{
+  pinField.value = pinField.value.replace(/\D/g,'').slice(0,4);
+  const code = pinField.value;
+  $('pinErr').textContent='';
+  if(code.length===4){
+    if(code===APP_PIN){ unlock(); }
+    else if(pinTouched){ $('pinErr').textContent='PIN ไม่ถูกต้อง'; pinField.value=''; }
+    else { pinField.value=''; }
+  }
+});
+function unlock(){
+  $('gate').classList.add('hidden');
+  $('app').classList.remove('hidden');
+  $('catCount').textContent = CATALOG.length;
+  render();
+}
+$('lockBtn').addEventListener('click',()=>{
+  $('app').classList.add('hidden');
+  $('gate').classList.remove('hidden');
+  pinField.value=''; pinTouched=false; $('pinErr').textContent=''; pinField.focus();
+});
+
+/* ============ MODEL ============ */
 function totals(){
   const food = S.items.reduce((a,b)=>a+num(b.cost),0);
-  const price = S.items.reduce((a,b)=>a+num(b.price),0);
-  return { food, price };
+  const pkg  = S.items.reduce((a,b)=>a+num(b.pkg),0);
+  const price= S.items.reduce((a,b)=>a+num(b.price),0);
+  return { food, pkg, price };
 }
 function promoPrice(){
   const {price} = totals();
   if(S.promoOverride!=null && S.promoOverride!=='') return num(S.promoOverride);
   return Math.round(price*(1-S.discount/100));
 }
-
-/* ---- core margin model (ตรงกับ Excel) ---- */
 function calcChannel(ch){
-  const {food} = totals();
+  const {food,pkg} = totals();
   const P = promoPrice();
   const vat=S.vat/100, gp=ch.gp/100, other=S.other/100, mkt=S.mkt/100;
-  const cost = food + (ch.pkg ? num(S.pkg) : 0);
-  const R = P/(1+vat);                       // รายได้ ex-VAT
-  const comm = gp*R;                         // ค่าคอม
-  const vatComm = vat*comm;                  // VAT บนค่าคอม
+  const cost = food + (ch.pkg ? pkg : 0);
+  const R = P/(1+vat);
+  const comm = gp*R, vatComm = vat*comm;
   const net = R - cost - comm - vatComm - other*R - mkt*R;
   const margin = R>0 ? net/R : 0;
-  // break-even price
-  const k = 1 - gp*(1+vat) - other - mkt;    // contribution factor
+  const k = 1 - gp*(1+vat) - other - mkt;
   const bePrice = k>0 ? (cost/k)*(1+vat) : Infinity;
-  return { P, R, cost, comm, net, margin, bePrice, k };
+  return { P, R, cost, net, margin, bePrice };
 }
 
 /* ============ RENDER ============ */
@@ -295,16 +376,17 @@ function renderItems(){
   S.items.forEach((it,i)=>{
     const tr=document.createElement('tr');
     tr.innerHTML =
-      `<td style="width:44%"><input class="nm" value="${escapeHtml(it.name)}" data-i="${i}" data-k="name"></td>`+
-      `<td style="width:24%"><input inputmode="decimal" value="${it.cost}" data-i="${i}" data-k="cost"></td>`+
-      `<td style="width:24%"><input inputmode="decimal" value="${it.price}" data-i="${i}" data-k="price"></td>`+
-      `<td style="width:8%"><button class="del" data-del="${i}">✕</button></td>`;
+      `<td><input class="nm" value="${escapeHtml(it.name)}" data-i="${i}" data-k="name"></td>`+
+      `<td><input inputmode="decimal" value="${it.cost}" data-i="${i}" data-k="cost"></td>`+
+      `<td><input inputmode="decimal" value="${it.pkg}" data-i="${i}" data-k="pkg"></td>`+
+      `<td><input inputmode="decimal" value="${it.price}" data-i="${i}" data-k="price"></td>`+
+      `<td style="text-align:center"><button class="del" data-del="${i}">✕</button></td>`;
     tb.appendChild(tr);
   });
   tb.querySelectorAll('input').forEach(inp=>{
     inp.addEventListener('input',()=>{
       const i=+inp.dataset.i, k=inp.dataset.k;
-      S.items[i][k] = (k==='name')? inp.value : inp.value;
+      S.items[i][k] = inp.value;
       save(); renderTotals(); renderPromo(); renderChannels();
     });
   });
@@ -313,51 +395,42 @@ function renderItems(){
   }));
 }
 function renderTotals(){
-  const {food,price}=totals();
+  const {food,pkg,price}=totals();
   $('sumFood').textContent = baht1(food);
-  $('sumPrice').textContent = baht(price);
+  $('sumPkg').textContent  = baht1(pkg);
+  $('sumPrice').textContent= baht(price);
   $('normalLbl').textContent = 'ปกติ '+baht(price);
 }
 function renderPromo(){
   const {price}=totals();
   $('disc').value = S.discount;
-  $('discVal').textContent = S.discount+'%';
   const P = promoPrice();
   $('promoBig').textContent = baht(P);
   if(document.activeElement!==$('promoInput')) $('promoInput').value = P;
   const off = price>0 ? Math.round((1-P/price)*100) : 0;
   $('discVal').textContent = off+'%';
 }
-function renderInputs(){
-  $('vat').value=S.vat; $('other').value=S.other; $('mkt').value=S.mkt; $('pkg').value=S.pkg;
-}
+function renderInputs(){ $('vat').value=S.vat; $('other').value=S.other; $('mkt').value=S.mkt; }
 function statusOf(m){ if(m<0) return 'bad'; if(m<0.08) return 'warn'; return 'good'; }
 function statusText(st){ return st==='good'?'ปลอดภัย':st==='warn'?'มาร์จิ้นบาง':'ขาดทุน'; }
 
 function renderChannels(){
   const box=$('channels'); box.innerHTML='';
   S.channels.forEach((ch,i)=>{
-    const r=calcChannel(ch);
-    const st=statusOf(r.margin);
-    const el=document.createElement('div');
-    el.className='chan '+st;
-    const beTxt = isFinite(r.bePrice)
-      ? `จุดคุ้มทุน ~${baht(r.bePrice)}`
-      : `คุ้มทุนไม่ได้ (ต้นทุน% เกินรายได้)`;
+    const r=calcChannel(ch), st=statusOf(r.margin);
+    const el=document.createElement('div'); el.className='chan '+st;
+    const beTxt = isFinite(r.bePrice) ? `จุดคุ้มทุน ~${baht(r.bePrice)}` : `คุ้มทุนไม่ได้`;
     el.innerHTML=
-      `<div class="top">
-        <div class="nm">${ch.name}</div>
-        <span class="badge ${st}">${statusText(st)}</span>
-      </div>
-      <div class="nums">
-        <div class="net ${r.net>=0?'pos':'neg'}">${r.net>=0?'':'−'}${baht(Math.abs(r.net))}</div>
-        <div class="mg">margin <b>${(r.margin*100).toFixed(1)}%</b></div>
-      </div>
-      <div class="meta">
-        <span class="gpedit">GP <input inputmode="decimal" value="${ch.gp}" data-gp="${i}">%</span>
-        <label class="pkgtog"><input type="checkbox" data-pkg="${i}" ${ch.pkg?'checked':''}> รวมแพคเกจ</label>
-        <span>${beTxt}</span>
-      </div>`;
+      `<div class="top"><div class="nm">${ch.name}</div><span class="badge ${st}">${statusText(st)}</span></div>
+       <div class="nums">
+         <div class="net ${r.net>=0?'pos':'neg'}">${r.net>=0?'':'−'}${baht(Math.abs(r.net))}</div>
+         <div class="mg">margin <b>${(r.margin*100).toFixed(1)}%</b></div>
+       </div>
+       <div class="meta">
+         <span class="gpedit">GP <input inputmode="decimal" value="${ch.gp}" data-gp="${i}">%</span>
+         <label class="pkgtog"><input type="checkbox" data-pkg="${i}" ${ch.pkg?'checked':''}> รวมแพคเกจ</label>
+         <span>${beTxt}</span>
+       </div>`;
     box.appendChild(el);
   });
   box.querySelectorAll('[data-gp]').forEach(inp=>inp.addEventListener('input',()=>{
@@ -370,12 +443,12 @@ function renderChannels(){
 function render(){ renderItems(); renderInputs(); renderTotals(); renderPromo(); renderChannels(); }
 
 /* ============ EVENTS ============ */
-$('addItem').addEventListener('click',()=>{
-  S.items.push({name:'เมนูใหม่',cost:0,price:0}); save();
+$('addBlank').addEventListener('click',()=>{
+  S.items.push({name:'เมนูใหม่',cost:0,pkg:0,price:0}); save();
   renderItems(); renderTotals(); renderPromo(); renderChannels();
 });
-['vat','other','mkt','pkg'].forEach(id=>{
-  $(id).addEventListener('input',()=>{ S[id]=num($(id).value); save(); renderTotals(); renderChannels(); });
+['vat','other','mkt'].forEach(id=>{
+  $(id).addEventListener('input',()=>{ S[id]=num($(id).value); save(); renderChannels(); });
 });
 $('disc').addEventListener('input',()=>{
   S.discount=+$('disc').value; S.promoOverride=null; save(); renderPromo(); renderChannels();
@@ -384,16 +457,73 @@ $('promoInput').addEventListener('input',()=>{
   S.promoOverride=$('promoInput').value; save();
   const {price}=totals(); const P=promoPrice();
   S.discount = price>0?Math.round((1-P/price)*100):0;
-  $('promoBig').textContent=baht(P); $('disc').value=S.discount; $('discVal').textContent=$('disc').value+'%';
+  $('promoBig').textContent=baht(P); $('disc').value=S.discount; $('discVal').textContent=S.discount+'%';
   renderChannels();
 });
 $('resetBtn').addEventListener('click',()=>{
-  if(confirm('คืนค่าทั้งหมดเป็นค่าเริ่มต้นจากไฟล์ Excel?')){
-    S=structuredClone(DEFAULTS); save(); render();
-  }
+  openConfirm('คืนค่าทั้งหมดเป็นค่าเริ่มต้นจากไฟล์ Excel? ข้อมูลที่แก้ไขไว้จะหายทั้งหมด', doReset);
 });
+function doReset(){
+  localStorage.removeItem(KEY);
+  S = structuredClone(DEFAULTS);
+  S.promoOverride = null;
+  save();
+  render();
+}
 
-function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+/* ============ MENU PICKER ============ */
+let pickSel = new Set();
+function openPicker(){
+  pickSel = new Set();
+  $('searchBox').value='';
+  renderPickList('');
+  $('picker').classList.remove('hidden');
+  updateAddBtn();
+  setTimeout(()=>$('searchBox').focus(),50);
+}
+function closePicker(){ $('picker').classList.add('hidden'); }
+function renderPickList(q){
+  q=(q||'').trim().toLowerCase();
+  const list=$('plist'); list.innerHTML='';
+  const filtered = CATALOG
+    .map((it,idx)=>({it,idx}))
+    .filter(({it})=> !q || it.name.toLowerCase().includes(q));
+  if(!filtered.length){ list.innerHTML='<div style="text-align:center;color:var(--muted);padding:30px 0;font-size:13px">ไม่พบเมนูที่ค้นหา</div>'; return; }
+  filtered.forEach(({it,idx})=>{
+    const row=document.createElement('div');
+    row.className='mitem'+(pickSel.has(idx)?' sel':'');
+    row.dataset.idx=idx;
+    row.innerHTML =
+      `<div class="chk">${pickSel.has(idx)?'✓':''}</div>
+       <div class="info"><div class="nm">${escapeHtml(it.name)}</div>
+       <div class="sub">ต้นทุน ฿${it.cost}${it.pkg?` · แพค ฿${it.pkg}`:''}</div></div>
+       <div class="pr">฿${it.price}</div>`;
+    row.addEventListener('click',()=>{
+      const id=+row.dataset.idx;
+      if(pickSel.has(id)){ pickSel.delete(id); row.classList.remove('sel'); row.querySelector('.chk').textContent=''; }
+      else { pickSel.add(id); row.classList.add('sel'); row.querySelector('.chk').textContent='✓'; }
+      updateAddBtn();
+    });
+    list.appendChild(row);
+  });
+}
+function updateAddBtn(){
+  const b=$('addSel'); const n=pickSel.size;
+  b.disabled = n===0;
+  b.textContent = n? `เพิ่มที่เลือก (${n})` : 'เพิ่มที่เลือก';
+}
+$('addItem').addEventListener('click',openPicker);
+$('pickerClose').addEventListener('click',closePicker);
+$('picker').addEventListener('click',e=>{ if(e.target===$('picker')) closePicker(); });
+$('searchBox').addEventListener('input',e=>renderPickList(e.target.value));
+$('addSel').addEventListener('click',()=>{
+  [...pickSel].sort((a,b)=>a-b).forEach(idx=>{
+    const it=CATALOG[idx];
+    S.items.push({name:it.name,cost:it.cost,pkg:it.pkg,price:it.price});
+  });
+  save(); closePicker();
+  renderItems(); renderTotals(); renderPromo(); renderChannels();
+});
 </script>
 </body>
 </html>
