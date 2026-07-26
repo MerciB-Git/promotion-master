@@ -29,8 +29,8 @@
   #gate .logo{width:64px;height:64px;border-radius:50%;background:var(--brand);display:grid;place-items:center;font-size:32px;box-shadow:0 10px 30px -8px rgba(193,39,45,.6);}
   #gate h2{font-size:20px;} #gate p{color:rgba(251,246,238,.6);margin:0;font-size:13px;text-align:center;}
   .pinbox{display:flex;gap:10px;}
-  .pinbox input{width:52px;height:60px;text-align:center;font-size:26px;font-weight:700;border-radius:14px;border:2px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:#fff;outline:none;}
-  .pinbox input:focus{border-color:var(--gold);}
+  #pinField{width:170px;height:60px;text-align:center;font-size:30px;font-weight:700;letter-spacing:14px;border-radius:14px;border:2px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:#fff;outline:none;-webkit-text-security:disc;text-security:disc;padding-left:14px;}
+  #pinField:focus{border-color:var(--gold);}
   #pinErr{color:#ff9a9a;font-size:13px;height:16px;}
 
   header{background:var(--deep);color:var(--cream);padding:18px 0 20px;border-radius:0 0 20px 20px;}
@@ -110,10 +110,7 @@
   <h2>Promo Margin Calculator</h2>
   <p>ใส่ PIN เพื่อเข้าใช้งาน<br>(เครื่องมือภายในของร้าน)</p>
   <div class="pinbox">
-    <input type="password" inputmode="numeric" maxlength="1" data-i="0" autocomplete="off">
-    <input type="password" inputmode="numeric" maxlength="1" data-i="1" autocomplete="off">
-    <input type="password" inputmode="numeric" maxlength="1" data-i="2" autocomplete="off">
-    <input type="password" inputmode="numeric" maxlength="1" data-i="3" autocomplete="off">
+    <input id="pinField" type="text" inputmode="numeric" maxlength="4" autocomplete="one-time-code" name="promo-pin" placeholder="••••">
   </div>
   <div id="pinErr"></div>
 </div>
@@ -232,18 +229,20 @@ function load(){
 function save(){ localStorage.setItem(KEY, JSON.stringify(S)); }
 
 /* ============ PIN GATE ============ */
-const pinInputs = [...document.querySelectorAll('.pinbox input')];
-pinInputs[0].focus();
-pinInputs.forEach((inp,i)=>{
-  inp.addEventListener('input',()=>{
-    if(inp.value && i<3) pinInputs[i+1].focus();
-    const code = pinInputs.map(x=>x.value).join('');
-    if(code.length===4){
-      if(code===APP_PIN){ unlock(); }
-      else { document.getElementById('pinErr').textContent='PIN ไม่ถูกต้อง'; pinInputs.forEach(x=>x.value=''); pinInputs[0].focus(); }
-    }
-  });
-  inp.addEventListener('keydown',e=>{ if(e.key==='Backspace' && !inp.value && i>0) pinInputs[i-1].focus(); });
+const pinField = document.getElementById('pinField');
+pinField.value = '';                       // กันค่า autofill ค้าง
+let pinTouched = false;
+setTimeout(()=>{ pinField.value=''; pinField.focus(); }, 60);
+pinField.addEventListener('keydown', ()=>{ pinTouched = true; });
+pinField.addEventListener('input', ()=>{
+  pinField.value = pinField.value.replace(/\D/g,'').slice(0,4);   // ตัวเลขเท่านั้น
+  const code = pinField.value;
+  document.getElementById('pinErr').textContent = '';
+  if(code.length===4){
+    if(code===APP_PIN){ unlock(); }
+    else if(pinTouched){ document.getElementById('pinErr').textContent='PIN ไม่ถูกต้อง'; pinField.value=''; }
+    else { pinField.value=''; }            // ค่าจาก autofill ที่ไม่ถูก → เคลียร์เงียบๆ
+  }
 });
 function unlock(){
   document.getElementById('gate').classList.add('hidden');
@@ -253,7 +252,7 @@ function unlock(){
 document.getElementById('lockBtn').addEventListener('click',()=>{
   document.getElementById('app').classList.add('hidden');
   document.getElementById('gate').classList.remove('hidden');
-  pinInputs.forEach(x=>x.value=''); document.getElementById('pinErr').textContent=''; pinInputs[0].focus();
+  pinField.value=''; pinTouched=false; document.getElementById('pinErr').textContent=''; pinField.focus();
 });
 
 /* ============ HELPERS ============ */
