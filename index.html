@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="theme-color" content="#1A1413">
+<title>Promo Margin Calculator — Chef Pam</title>
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🍕%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🍕%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --brand:#C1272D; --brand-dark:#8E1B20; --deep:#1A1413; --deep2:#241B19;
+    --gold:#E6B34A; --cream:#FBF6EE; --ink:#2A211E; --muted:#8a7d76;
+    --good:#1B9E5A; --good-bg:#e7f6ee; --warn:#C8952E; --warn-bg:#fdf3e0; --bad:#C1272D; --bad-bg:#fbe8e8;
+    --line:#eaddd0;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;}
+  body{font-family:'Prompt',sans-serif;background:var(--cream);color:var(--ink);font-size:15px;line-height:1.45;}
+  h1,h2,h3{margin:0;font-weight:700;}
+  input,button{font-family:inherit;}
+  .wrap{max-width:640px;margin:0 auto;padding:0 14px 120px;}
+
+  /* PIN gate */
+  #gate{position:fixed;inset:0;z-index:100;background:var(--deep);color:var(--cream);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:24px;}
+  #gate .logo{width:64px;height:64px;border-radius:50%;background:var(--brand);display:grid;place-items:center;font-size:32px;box-shadow:0 10px 30px -8px rgba(193,39,45,.6);}
+  #gate h2{font-size:20px;} #gate p{color:rgba(251,246,238,.6);margin:0;font-size:13px;text-align:center;}
+  .pinbox{display:flex;gap:10px;}
+  .pinbox input{width:52px;height:60px;text-align:center;font-size:26px;font-weight:700;border-radius:14px;border:2px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:#fff;outline:none;}
+  .pinbox input:focus{border-color:var(--gold);}
+  #pinErr{color:#ff9a9a;font-size:13px;height:16px;}
+
+  header{background:var(--deep);color:var(--cream);padding:18px 0 20px;border-radius:0 0 20px 20px;}
+  header .wrap{padding-bottom:0;}
+  .brandrow{display:flex;align-items:center;gap:10px;}
+  .brandrow .dot{width:34px;height:34px;border-radius:50%;background:var(--brand);display:grid;place-items:center;font-size:18px;}
+  header h1{font-size:17px;}
+  header .sub{color:rgba(251,246,238,.55);font-size:12px;margin-top:2px;}
+
+  .card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;margin-top:14px;box-shadow:0 6px 18px -14px rgba(0,0,0,.25);}
+  .card h3{font-size:14px;color:var(--brand);display:flex;align-items:center;gap:7px;margin-bottom:10px;}
+  .card h3 .n{width:20px;height:20px;border-radius:50%;background:var(--brand);color:#fff;font-size:12px;display:grid;place-items:center;}
+
+  .row{display:flex;align-items:center;gap:8px;}
+  label.fld{display:flex;flex-direction:column;gap:4px;flex:1;}
+  label.fld span{font-size:11px;color:var(--muted);}
+  input.inp{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:9px 10px;font-size:15px;font-weight:600;color:var(--ink);background:#fff;outline:none;text-align:right;}
+  input.inp:focus{border-color:var(--gold);background:#fffdf8;}
+
+  table{width:100%;border-collapse:collapse;}
+  .items th{font-size:10.5px;color:var(--muted);font-weight:500;text-align:right;padding:0 4px 6px;}
+  .items th:first-child{text-align:left;}
+  .items td{padding:3px 2px;}
+  .items input{border:1.5px solid var(--line);border-radius:8px;padding:7px 6px;font-size:13.5px;width:100%;text-align:right;font-weight:600;outline:none;}
+  .items input.nm{text-align:left;font-weight:500;color:var(--ink);}
+  .items input:focus{border-color:var(--gold);}
+  .items .del{color:var(--muted);background:none;border:none;font-size:17px;cursor:pointer;padding:0 2px;}
+  .addbtn{margin-top:8px;background:none;border:1.5px dashed var(--line);color:var(--brand);border-radius:10px;padding:8px;width:100%;font-weight:600;font-size:13px;cursor:pointer;}
+  .totrow{display:flex;justify-content:space-between;margin-top:10px;padding-top:10px;border-top:1px dashed var(--line);font-size:13px;}
+  .totrow b{color:var(--deep);}
+
+  .promo-price{text-align:center;margin:6px 0 4px;}
+  .promo-price .big{font-size:40px;font-weight:800;color:var(--brand);line-height:1;}
+  .promo-price .strike{color:var(--muted);text-decoration:line-through;font-size:14px;}
+  .slider{width:100%;margin:14px 0 4px;accent-color:var(--brand);height:26px;}
+  .disclbl{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);}
+
+  .chan{border:1px solid var(--line);border-radius:14px;padding:12px;margin-top:10px;}
+  .chan.good{border-left:5px solid var(--good);}
+  .chan.warn{border-left:5px solid var(--warn);}
+  .chan.bad{border-left:5px solid var(--bad);background:var(--bad-bg);}
+  .chan .top{display:flex;justify-content:space-between;align-items:center;gap:8px;}
+  .chan .nm{font-weight:600;font-size:15px;display:flex;align-items:center;gap:7px;}
+  .badge{font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;}
+  .badge.good{background:var(--good-bg);color:var(--good);}
+  .badge.warn{background:var(--warn-bg);color:var(--warn);}
+  .badge.bad{background:#fff;color:var(--bad);border:1px solid var(--bad);}
+  .chan .nums{display:flex;gap:14px;margin-top:8px;align-items:baseline;}
+  .chan .net{font-size:24px;font-weight:800;}
+  .chan .net.pos{color:var(--good);} .chan .net.neg{color:var(--bad);}
+  .chan .mg{font-size:13px;color:var(--muted);}
+  .chan .mg b{font-size:15px;color:var(--ink);}
+  .chan .meta{font-size:11.5px;color:var(--muted);margin-top:7px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;}
+  .chan .gpedit{display:flex;align-items:center;gap:6px;}
+  .chan .gpedit input{width:52px;border:1.5px solid var(--line);border-radius:8px;padding:4px 6px;text-align:right;font-weight:600;font-size:13px;outline:none;}
+  .chan .gpedit input:focus{border-color:var(--gold);}
+  .chan .pkgtog{display:flex;align-items:center;gap:5px;font-size:11.5px;color:var(--muted);}
+
+  .mini{font-size:11px;color:var(--muted);}
+  .foot{text-align:center;font-size:11px;color:var(--muted);margin-top:18px;line-height:1.6;}
+  .savebar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);padding:10px 14px;display:flex;gap:10px;max-width:640px;margin:0 auto;box-shadow:0 -8px 20px -14px rgba(0,0,0,.3);}
+  .savebar button{flex:1;border:none;border-radius:12px;padding:12px;font-weight:700;font-size:14px;cursor:pointer;}
+  .savebar .reset{background:var(--cream);color:var(--brand);border:1.5px solid var(--line);flex:0 0 44%;}
+  .savebar .save{background:var(--brand);color:#fff;}
+  .hidden{display:none!important;}
+  details.help{margin-top:10px;font-size:12px;color:var(--muted);}
+  details.help summary{cursor:pointer;color:var(--brand);font-weight:600;}
+  details.help p{margin:6px 0;}
+  code{background:#f3ece3;padding:1px 5px;border-radius:5px;font-size:11px;}
+</style>
+</head>
+<body>
+
+<!-- ===== PIN GATE ===== -->
+<div id="gate">
+  <div class="logo">🍕</div>
+  <h2>Promo Margin Calculator</h2>
+  <p>ใส่ PIN เพื่อเข้าใช้งาน<br>(เครื่องมือภายในของร้าน)</p>
+  <div class="pinbox">
+    <input type="password" inputmode="numeric" maxlength="1" data-i="0" autocomplete="off">
+    <input type="password" inputmode="numeric" maxlength="1" data-i="1" autocomplete="off">
+    <input type="password" inputmode="numeric" maxlength="1" data-i="2" autocomplete="off">
+    <input type="password" inputmode="numeric" maxlength="1" data-i="3" autocomplete="off">
+  </div>
+  <div id="pinErr"></div>
+</div>
+
+<!-- ===== APP ===== -->
+<div id="app" class="hidden">
+  <header>
+    <div class="wrap">
+      <div class="brandrow">
+        <div class="dot">🍕</div>
+        <div>
+          <h1>Promo Margin Calculator</h1>
+          <div class="sub">Chef Pam • คำนวณกำไรก่อนตั้งราคาโปรฯ</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap">
+
+    <!-- Bundle items -->
+    <div class="card">
+      <h3><span class="n">1</span> เมนูในเซ็ต (ต้นทุน & ราคาปกติ)</h3>
+      <table class="items">
+        <thead><tr><th>เมนู</th><th>ต้นทุน ฿</th><th>ราคาปกติ ฿</th><th></th></tr></thead>
+        <tbody id="itemBody"></tbody>
+      </table>
+      <button class="addbtn" id="addItem">+ เพิ่มเมนู</button>
+      <div class="totrow"><span>รวมต้นทุนอาหาร</span><b id="sumFood">฿0</b></div>
+      <div class="totrow" style="margin-top:4px;border:none;padding-top:0;"><span>รวมราคาปกติ (ก่อนลด)</span><b id="sumPrice">฿0</b></div>
+    </div>
+
+    <!-- Overheads -->
+    <div class="card">
+      <h3><span class="n">2</span> โครงสร้างต้นทุนแฝง</h3>
+      <div class="row" style="gap:10px;">
+        <label class="fld"><span>VAT %</span><input class="inp" id="vat" inputmode="decimal"></label>
+        <label class="fld"><span>ค่าใช้จ่ายอื่น %</span><input class="inp" id="other" inputmode="decimal"></label>
+      </div>
+      <div class="row" style="gap:10px;margin-top:8px;">
+        <label class="fld"><span>การตลาด %</span><input class="inp" id="mkt" inputmode="decimal"></label>
+        <label class="fld"><span>ค่าแพคเกจ/เซ็ต ฿</span><input class="inp" id="pkg" inputmode="decimal"></label>
+      </div>
+      <div class="mini" style="margin-top:8px;">% คิดจากรายได้ (ex-VAT) • แพคเกจใช้เฉพาะช่องที่ติ๊ก "รวมแพคเกจ"</div>
+    </div>
+
+    <!-- Promo price -->
+    <div class="card">
+      <h3><span class="n">3</span> ตั้งราคาโปรโมชัน</h3>
+      <div class="promo-price">
+        <div class="strike" id="normalLbl">ปกติ ฿0</div>
+        <div class="big" id="promoBig">฿0</div>
+      </div>
+      <input type="range" class="slider" id="disc" min="0" max="50" step="1">
+      <div class="disclbl"><span>ส่วนลด <b id="discVal">0%</b></span><span>หรือพิมพ์ราคาตรง →</span></div>
+      <div class="row" style="margin-top:8px;justify-content:flex-end;gap:8px;">
+        <span class="mini">ราคาโปรฯ (รวม VAT)</span>
+        <input class="inp" id="promoInput" inputmode="decimal" style="max-width:120px;">
+      </div>
+    </div>
+
+    <!-- Results per channel -->
+    <div class="card">
+      <h3><span class="n">4</span> กำไรสุทธิรายช่องทาง</h3>
+      <div id="channels"></div>
+      <details class="help">
+        <summary>สูตรคำนวณ & เกณฑ์สี</summary>
+        <p><b>กำไรสุทธิ</b> = รายได้(ex-VAT) − ต้นทุนอาหาร − แพคเกจ − ค่าคอม − VATค่าคอม − ค่าใช้จ่ายอื่น − การตลาด</p>
+        <p>รายได้ ex-VAT = ราคาโปรฯ ÷ (1+VAT) • ค่าคอม = GP × รายได้ • VATค่าคอม = VAT × ค่าคอม</p>
+        <p>🟢 margin ≥ 8% ปลอดภัย • 🟡 0–8% บาง • 🔴 ต่ำกว่า 0 ขาดทุน</p>
+        <p>โมเดลนี้ตรงกับไฟล์ Excel ต้นฉบับ (Hungry Hub ฿790 → กำไร ฿63 / 8.6%)</p>
+      </details>
+    </div>
+
+    <div class="foot">
+      ค่าที่แก้ไขถูกบันทึกในเครื่องนี้อัตโนมัติ (localStorage)<br>
+      เปลี่ยน PIN: แก้ค่า <code>APP_PIN</code> ในไฟล์ index.html
+    </div>
+  </div>
+
+  <div class="savebar">
+    <button class="reset" id="resetBtn">↺ คืนค่าเริ่มต้น</button>
+    <button class="save" id="lockBtn">🔒 ล็อกหน้าจอ</button>
+  </div>
+</div>
+
+<script>
+/* ============ CONFIG ============ */
+const APP_PIN = "2495";   // <<< เปลี่ยน PIN ตรงนี้ (4 หลัก)
+
+/* ============ DEFAULT DATA (จากไฟล์ Excel) ============ */
+const DEFAULTS = {
+  items: [
+    { name:'Smoked Pizza 11"', cost:139.52, price:495 },
+    { name:'Caesar Salad',      cost:51.00,  price:240 },
+    { name:'Spaghetti Chilli Shrimp', cost:65.26, price:235 },
+    { name:'น้ำดื่ม',           cost:7.00,   price:20  },
+  ],
+  vat:7, other:35, mkt:8, pkg:34,
+  discount:20,            // %
+  promoOverride:null,     // ถ้าพิมพ์ราคาตรง
+  channels: [
+    { name:'🏠 หน้าร้าน / รับกลับ', gp:0,  pkg:true  },
+    { name:'🍽️ Hungry Hub',        gp:12, pkg:false },
+    { name:'🛵 LINE MAN',           gp:10, pkg:true  },
+    { name:'🛵 Grab',               gp:30, pkg:true  },
+  ],
+};
+const KEY = 'chefpam_promo_calc_v1';
+let S = load();
+
+function load(){
+  try{ const s = JSON.parse(localStorage.getItem(KEY)); if(s && s.items) return s; }catch(e){}
+  return structuredClone(DEFAULTS);
+}
+function save(){ localStorage.setItem(KEY, JSON.stringify(S)); }
+
+/* ============ PIN GATE ============ */
+const pinInputs = [...document.querySelectorAll('.pinbox input')];
+pinInputs[0].focus();
+pinInputs.forEach((inp,i)=>{
+  inp.addEventListener('input',()=>{
+    if(inp.value && i<3) pinInputs[i+1].focus();
+    const code = pinInputs.map(x=>x.value).join('');
+    if(code.length===4){
+      if(code===APP_PIN){ unlock(); }
+      else { document.getElementById('pinErr').textContent='PIN ไม่ถูกต้อง'; pinInputs.forEach(x=>x.value=''); pinInputs[0].focus(); }
+    }
+  });
+  inp.addEventListener('keydown',e=>{ if(e.key==='Backspace' && !inp.value && i>0) pinInputs[i-1].focus(); });
+});
+function unlock(){
+  document.getElementById('gate').classList.add('hidden');
+  document.getElementById('app').classList.remove('hidden');
+  render(); renderChannels();
+}
+document.getElementById('lockBtn').addEventListener('click',()=>{
+  document.getElementById('app').classList.add('hidden');
+  document.getElementById('gate').classList.remove('hidden');
+  pinInputs.forEach(x=>x.value=''); document.getElementById('pinErr').textContent=''; pinInputs[0].focus();
+});
+
+/* ============ HELPERS ============ */
+const $ = id => document.getElementById(id);
+const num = v => { const n=parseFloat(v); return isNaN(n)?0:n; };
+const baht = n => '฿'+Math.round(n).toLocaleString();
+const baht1 = n => '฿'+n.toLocaleString(undefined,{maximumFractionDigits:1});
+
+function totals(){
+  const food = S.items.reduce((a,b)=>a+num(b.cost),0);
+  const price = S.items.reduce((a,b)=>a+num(b.price),0);
+  return { food, price };
+}
+function promoPrice(){
+  const {price} = totals();
+  if(S.promoOverride!=null && S.promoOverride!=='') return num(S.promoOverride);
+  return Math.round(price*(1-S.discount/100));
+}
+
+/* ---- core margin model (ตรงกับ Excel) ---- */
+function calcChannel(ch){
+  const {food} = totals();
+  const P = promoPrice();
+  const vat=S.vat/100, gp=ch.gp/100, other=S.other/100, mkt=S.mkt/100;
+  const cost = food + (ch.pkg ? num(S.pkg) : 0);
+  const R = P/(1+vat);                       // รายได้ ex-VAT
+  const comm = gp*R;                         // ค่าคอม
+  const vatComm = vat*comm;                  // VAT บนค่าคอม
+  const net = R - cost - comm - vatComm - other*R - mkt*R;
+  const margin = R>0 ? net/R : 0;
+  // break-even price
+  const k = 1 - gp*(1+vat) - other - mkt;    // contribution factor
+  const bePrice = k>0 ? (cost/k)*(1+vat) : Infinity;
+  return { P, R, cost, comm, net, margin, bePrice, k };
+}
+
+/* ============ RENDER ============ */
+function renderItems(){
+  const tb = $('itemBody'); tb.innerHTML='';
+  S.items.forEach((it,i)=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML =
+      `<td style="width:44%"><input class="nm" value="${escapeHtml(it.name)}" data-i="${i}" data-k="name"></td>`+
+      `<td style="width:24%"><input inputmode="decimal" value="${it.cost}" data-i="${i}" data-k="cost"></td>`+
+      `<td style="width:24%"><input inputmode="decimal" value="${it.price}" data-i="${i}" data-k="price"></td>`+
+      `<td style="width:8%"><button class="del" data-del="${i}">✕</button></td>`;
+    tb.appendChild(tr);
+  });
+  tb.querySelectorAll('input').forEach(inp=>{
+    inp.addEventListener('input',()=>{
+      const i=+inp.dataset.i, k=inp.dataset.k;
+      S.items[i][k] = (k==='name')? inp.value : inp.value;
+      save(); renderTotals(); renderPromo(); renderChannels();
+    });
+  });
+  tb.querySelectorAll('.del').forEach(b=>b.addEventListener('click',()=>{
+    S.items.splice(+b.dataset.del,1); save(); renderItems(); renderTotals(); renderPromo(); renderChannels();
+  }));
+}
+function renderTotals(){
+  const {food,price}=totals();
+  $('sumFood').textContent = baht1(food);
+  $('sumPrice').textContent = baht(price);
+  $('normalLbl').textContent = 'ปกติ '+baht(price);
+}
+function renderPromo(){
+  const {price}=totals();
+  $('disc').value = S.discount;
+  $('discVal').textContent = S.discount+'%';
+  const P = promoPrice();
+  $('promoBig').textContent = baht(P);
+  if(document.activeElement!==$('promoInput')) $('promoInput').value = P;
+  const off = price>0 ? Math.round((1-P/price)*100) : 0;
+  $('discVal').textContent = off+'%';
+}
+function renderInputs(){
+  $('vat').value=S.vat; $('other').value=S.other; $('mkt').value=S.mkt; $('pkg').value=S.pkg;
+}
+function statusOf(m){ if(m<0) return 'bad'; if(m<0.08) return 'warn'; return 'good'; }
+function statusText(st){ return st==='good'?'ปลอดภัย':st==='warn'?'มาร์จิ้นบาง':'ขาดทุน'; }
+
+function renderChannels(){
+  const box=$('channels'); box.innerHTML='';
+  S.channels.forEach((ch,i)=>{
+    const r=calcChannel(ch);
+    const st=statusOf(r.margin);
+    const el=document.createElement('div');
+    el.className='chan '+st;
+    const beTxt = isFinite(r.bePrice)
+      ? `จุดคุ้มทุน ~${baht(r.bePrice)}`
+      : `คุ้มทุนไม่ได้ (ต้นทุน% เกินรายได้)`;
+    el.innerHTML=
+      `<div class="top">
+        <div class="nm">${ch.name}</div>
+        <span class="badge ${st}">${statusText(st)}</span>
+      </div>
+      <div class="nums">
+        <div class="net ${r.net>=0?'pos':'neg'}">${r.net>=0?'':'−'}${baht(Math.abs(r.net))}</div>
+        <div class="mg">margin <b>${(r.margin*100).toFixed(1)}%</b></div>
+      </div>
+      <div class="meta">
+        <span class="gpedit">GP <input inputmode="decimal" value="${ch.gp}" data-gp="${i}">%</span>
+        <label class="pkgtog"><input type="checkbox" data-pkg="${i}" ${ch.pkg?'checked':''}> รวมแพคเกจ</label>
+        <span>${beTxt}</span>
+      </div>`;
+    box.appendChild(el);
+  });
+  box.querySelectorAll('[data-gp]').forEach(inp=>inp.addEventListener('input',()=>{
+    S.channels[+inp.dataset.gp].gp = num(inp.value); save(); renderChannels();
+  }));
+  box.querySelectorAll('[data-pkg]').forEach(cb=>cb.addEventListener('change',()=>{
+    S.channels[+cb.dataset.pkg].pkg = cb.checked; save(); renderChannels();
+  }));
+}
+function render(){ renderItems(); renderInputs(); renderTotals(); renderPromo(); renderChannels(); }
+
+/* ============ EVENTS ============ */
+$('addItem').addEventListener('click',()=>{
+  S.items.push({name:'เมนูใหม่',cost:0,price:0}); save();
+  renderItems(); renderTotals(); renderPromo(); renderChannels();
+});
+['vat','other','mkt','pkg'].forEach(id=>{
+  $(id).addEventListener('input',()=>{ S[id]=num($(id).value); save(); renderTotals(); renderChannels(); });
+});
+$('disc').addEventListener('input',()=>{
+  S.discount=+$('disc').value; S.promoOverride=null; save(); renderPromo(); renderChannels();
+});
+$('promoInput').addEventListener('input',()=>{
+  S.promoOverride=$('promoInput').value; save();
+  const {price}=totals(); const P=promoPrice();
+  S.discount = price>0?Math.round((1-P/price)*100):0;
+  $('promoBig').textContent=baht(P); $('disc').value=S.discount; $('discVal').textContent=$('disc').value+'%';
+  renderChannels();
+});
+$('resetBtn').addEventListener('click',()=>{
+  if(confirm('คืนค่าทั้งหมดเป็นค่าเริ่มต้นจากไฟล์ Excel?')){
+    S=structuredClone(DEFAULTS); save(); render();
+  }
+});
+
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+</script>
+</body>
+</html>
